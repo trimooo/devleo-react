@@ -1,19 +1,18 @@
-
-import "./projects.css"
+import "./projects.css";
 
 const Projects = () => {
     return (
-        <div>
+
             <div className="container justify-content-center text-center">
                 <h1 className="fw-bold display-4 fa-5x titlee translate-key" data-key="projectsTitle" id="projects">Projects</h1>
                 <h5 className="translate-key" data-key="projectsSubtitle">Each project is a unique piece of development</h5>
-                <div className="card-group row row-cols-1 row-cols-md-2 g-4">
+                <card className="card-group row row-cols-1 row-cols-md-2 g-4">
                     {/* Start Weather-App */}
                     <div className="card mb-3" style={{ maxWidth: 540 }}>
                         <div className="row g-4">
                             <div className="col"></div>
                             <div className="col-md-13">
-                                <img src="../../weather.png" className="img-fluid rounded-start" alt="..." />
+                                <img src="../../weather.png" className="img-fluid rounded-start rounded-5 card_img" alt="..." />
                             </div>
                             <h5 className="card-title fw-bold fa-2x translate-key" data-key="project2Title" style={{ display: 'inline-block' }}>Weather-App</h5>
                             <div className="col">
@@ -119,6 +118,7 @@ const Projects = () => {
                         </div>
                     </div>
                     {/* End Budget */}
+
                     {/* Start Type Test */}
                     <div className="card mb-3" style={{ maxWidth: 540 }}>
                         <div className="row g-4">
@@ -290,9 +290,9 @@ const Projects = () => {
                         </div>
                     </div>
                     {/* End Rectify */}
-                </div>
+                </card>
             </div>
-        </div>
+
     )
 }
 
