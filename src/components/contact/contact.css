@@ -1,3 +1,131 @@
-.div {
-    background-color: aqua;
+.conc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contact {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.contact form {
+    width: 600px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.contact form:hover {
+    transform: translateY(-5px);
+}
+
+form .input-box {
+    display: flex;
+    justify-content: space-around;
+}
+
+.input-box .input-field {
+    width: 48.5%;
+}
+
+.field .iteme {
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    border: 2px solid #555;
+    outline: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #000000ed;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.field.error .iteme {
+    border-color: red;
+}
+
+.field .item::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+.field .error-txt {
+    font-size: 14.5px;
+    color: red;
+    text-align: left;
+    margin: -5px 0 10px;
+    display: none;
+}
+
+.field.error .error-txt {
+    display: block;
+}
+
+.textarea-field textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+form button {
+    padding: 12px 32px;
+    background: #eb1b74;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(235, 27, 116, 0.3);
+}
+
+
+form button:hover {
+    background: #d41968;
+    box-shadow: 0 7px 20px rgba(235, 27, 116, 0.4);
+    transform: translateY(-2px);
+}
+
+form button:active {
+    transform: translateY(0);
+}
+
+
+
+.field .iteme:hover {
+    border-color: #eb1b74;
+}
+
+
+/* Add a subtle animation for error messages */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.field.error .error-txt {
+    animation: shake 0.6s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 650px) {
+    .contact form {
+        width: 90%;
+        padding: 30px;
+    }
+
+    form .input-box {
+        flex-direction: column;
+    }
+
+    .input-box .input-field {
+        width: 100%;
+    }
 }

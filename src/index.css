@@ -380,3 +380,42 @@ body::-webkit-scrollbar-thumb:hover {
   .logos {
     font-size: 550%;
   }
+
+
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+    /* Default text color for dark mode */
+}
+
+body.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+    /* Default text color for light mode */
+}
+
+
+
+.mode-toggle {
+    position: absolute;
+    top: 100px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.toggle-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+    background-color: #ddd;
+}
+

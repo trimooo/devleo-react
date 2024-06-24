@@ -1,55 +1,49 @@
-import "./home.css"
+
+import "./home.css";
+
+
+
+
 
 const Home = () => {
+
+    
     return (
-    <div>
-
-<div className="container d-flex flex-column justify-content-center align-items-center mt-5 ">
-  <div className="row">
-    <div className="col-md-6 text-center mt-5">
-      <h1 className="display-4 fw-medium">Junior Front-End Developer</h1>
-      <p className="lead fw-medium ">
-        <span className="translate-key" data-key="developer">
-          Hi, I am Leotrim Thaqi - devleo. A passionate Front-End Developer based
-          in Kosovo - Germany. <i className="fa fa-location-dot" /></span>
-      </p>
-      <div className="text-md-end ">
-        <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank">
-          <i className="fa-brands fa-linkedin fa-3x m-3" style={{color: '#999'}} />
-        </a>
-        <a href="https://www.github.com/trimooo" target="_blank">
-          <i className="fa-brands fa-github fa-3x" style={{color: '#999'}} />
-        </a>
-      </div>
+        <div className="home-container">
+            <div className="content-wrapper">
+                <div className="text-content">
+                    <h1 className="title light-text">Junior Front-End Developer</h1>
+                    <p className="subtitle light-text" >
+                        Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
+                        A passionate Front-End Developer based in Kosovo - Germany.
+                        <i className="fas fa-map-marker-alt location-icon"></i>
+                    </p>
+                    <div className="social-links">
+                        <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
+                            <i className="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.github.com/trimooo" target="_blank" rel="noopener noreferrer" className="social-icon github">
+                            <i className="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div className="image-content">
+                    <img src="../../small-leo.png" alt="Leotrim Thaqi" className="profile-image" />
+                </div>
+            </div>
+            <div className="tech-stack">
+    <h2 className="tech-stack-title">Tech Stack</h2>
+    <div className="tech-icons">
+        {['html5', 'css3-alt', 'js', 'php', 'react', 'sass', 'bootstrap', ].map((tech, index) => (
+            <div key={index} className="tech-icon-wrapper">
+                <i className={`fab fa-${tech}`}></i>
+                <span className="tech-name">{tech.replace('-alt', '').toUpperCase()}</span>
+            </div>
+        ))}
     </div>
-    <div className="col-md-6 mb-8 text-center ">
-      <img src="../../small-leo.png" className="img-fluid rounded-9 img" alt="Photo" />
-    </div>
-  </div>
-  <div className="row my-5 mb-14 ">
-    <div className="col text-center">
-      <div>
-        {/*<h3 class="translate-key" data-key="techStacks">Tech Stacks</h3>*/}
-        <div className="icon-container ">
-          <i className="fa-brands fa-html5 fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-css3-alt fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-js fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-php fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-react fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-sass fa-8x m-3" style={{color: '#000'}} />
-          <i className="fa-brands fa-bootstrap fa-8x" style={{color: '#000'}} />
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
-
-
-    </div>
+        </div>
     )
 }
 
-export default Home
-
-
-
+export default Home;

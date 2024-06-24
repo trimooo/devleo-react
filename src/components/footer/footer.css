@@ -1,3 +1,90 @@
-.div {
-    background-color: darkmagenta;
+.footer {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 2rem 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-logo {
+    flex: 1;
+}
+
+.ascii-art {
+    font-size: 0.7rem;
+    line-height: 1;
+    color: #eb1b7e;
+    margin: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    color: #d4d4d4;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-link:hover {
+    color: #569cd6;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+}
+
+.easter-egg {
+    color: #1e1e1e;
+    transition: color 0.3s ease;
+}
+
+.easter-egg:hover {
+    color: #eb1b7e;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin-bottom: 1rem;
+    }
+
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+}
+
+/* Glow effect on hover */
+.footer:hover .ascii-art {
+    text-shadow: 0 0 5px #569cd6, 0 0 10px #569cd6;
+}
+
+/* Terminal-like cursor animation */
+.footer-bottom p::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }

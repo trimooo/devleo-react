@@ -1,0 +1,2316 @@
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\about\about.css
+.about-section {
+    padding: 5rem 0;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #333;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 400px;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+    flex: 2;
+}
+
+.about-subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.about-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-badge {
+    background-color: #e8d4e4;
+    color: #eb1b74;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+    background-color: #eb1b74;
+    color: white;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .about-image {
+        max-width: 100%;
+    }
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\about\About.jsx
+
+import "./about.css";
+
+const About = () => {
+    return (
+        <section className="about-section">
+            <div className="container">
+                <h1 className="section-title" id="about">About Me</h1>
+                <div className="about-content">
+                    <div className="about-image">
+                        <img src="../../full-image-leo.png" alt="Leotrim Photo" className="profile-image" />
+                    </div>
+                    <div className="about-text">
+                        <h2 className="about-subtitle">A dedicated Front-End Developer based in Kosovo.</h2>
+                        <p className="about-description">
+                            As a Junior Front-End Developer, I possess an impressive arsenal
+                            of skills in HTML, CSS, JavaScript, React, Bootstrap and SCSS. I
+                            excel in designing and maintaining responsive websites that
+                            offer a smooth user experience. My expertise lies in crafting
+                            dynamic, engaging interfaces through writing clean and optimized
+                            code and utilizing cutting-edge development tools and
+                            techniques. I am also a team player who thrives in collaborating
+                            with cross-functional teams to produce outstanding web
+                            applications.
+                        </p>
+                        <div className="skills-container">
+                            {['HTML', 'CSS', 'JavaScript', 'PHP', 'React', 'Sass', 'Bootstrap'].map((skill, index) => (
+                                <span key={index} className="skill-badge">{skill}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+export default About;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\contact.css
+.concst{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.conc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+.contact form {
+    width: 600px;
+    height: 100%;
+    text-align: center;
+  }
+  
+  form .input-box {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .input-box .input-field {
+    width: 48.5%;
+  }
+  
+  .field .iteme {
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    border: 2px solid #555;
+    outline: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #000000ed;
+    margin: 20px 0;
+  }
+
+  .itemsubj {
+    padding: 100%;
+  }
+  
+  .field.error .iteme {
+    border-color: red;
+  }
+  
+  .field .item::placeholder {
+    color: rgba(255, 255, 255, .3)
+  }
+  
+  .field .error-txt {
+    font-size: 14.5px;
+    color: red;
+    text-align: left;
+    margin: -5px 0 10px;
+    display: none;
+  }
+  
+  .field.error .error-txt{
+    display: block;
+  }
+  
+  .form .textarea-filed .error-txt {
+    margin-top: -10px;
+  }
+  
+  form .textarea-filed {
+    resize: none;
+  }
+  
+  form button {
+    padding: 12px 32px;
+    background: #000;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #000;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  form button:hover {
+    box-shadow: none;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\Contact.jsx
+import React, { useState } from "react";
+import Swal from "sweetalert2"
+import "./contact.css";
+
+const Contact = () => {
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    
+      const [errors, setErrors] = useState({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
+        }));
+      };
+    
+      const validateEmail = (email) => {
+        const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
+        return emailRegex.test(email);
+      };
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        let valid = true;
+    
+        if (!formData.fullName) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            fullName: "Full Name can't be blank"
+          }));
+        }
+        if (!formData.email || !validateEmail(formData.email)) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: formData.email ? "Please enter a valid email address" : "Email Address can't be blank"
+          }));
+        }
+        if (!formData.subject) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            subject: "Subject can't be blank"
+          }));
+        }
+        if (!formData.message) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            message: "Message can't be blank"
+          }));
+        }
+    
+        if (valid) {
+          sendEmail();
+          setFormData({
+            fullName: "",
+            email: "",
+            subject: "",
+            message: ""
+          });
+          Swal.fire({
+            title: "SUCCESS!",
+            text: "Message sent successfully!",
+            icon: "success"
+          });
+        }
+      };
+    
+      const sendEmail = () => {
+        const bodyMessage = `Full Name: ${formData.fullName}<br>
+        Email: ${formData.email}<br> 
+        Message: ${formData.message}`;
+    
+        window.Email.send({
+          SecureToken: "9065bdcd-5ddb-4e51-bc8a-dafeb0d68a3b",
+          Host: "smtp.elasticemail.com",
+          Username: "leotrimthaqi605@gmail.com",
+          Password: "B12540305697B69B37F574AC2A926F0F1535",
+          To: 'leo@devleo.de',
+          From: "leo@devleo.de",
+          Subject: formData.subject,
+          Body: bodyMessage
+        }).then(
+          (message) => {
+            if (message === "OK") {
+              Swal.fire({
+                title: "SUCCESS!",
+                text: "Message sent successfully!",
+                icon: "success"
+              });
+            }
+          }
+        );
+      };
+
+  return (
+
+        <div className="container mb-14 justify-content-center text-center">
+          <h2 className="fw-bold display-4 fa-5x title contact" id="contact">
+            Contact
+          </h2>
+    
+          <div className="concst">
+            <div className="conc">
+              <form onSubmit={handleSubmit}>
+                <div className="input-box">
+                  <div className={`input-field field ${errors.fullName ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="fullName"
+                      placeholder="Full Name"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                    />
+                    {errors.fullName && <div className="error-txt">{errors.fullName}</div>}
+                  </div>
+                  <div className={`input-field field ${errors.email ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="email"
+                      placeholder="Email Address"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <div className="error-txt email">{errors.email}</div>}
+                  </div>
+                </div>
+    
+                <div className="input-box">
+                  <div className={`input-field field ${errors.subject ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="subject"
+                      placeholder="Subject"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.subject}
+                      onChange={handleChange}
+                    />
+                    {errors.subject && <div className="error-txt">{errors.subject}</div>}
+                  </div>
+                </div>
+    
+                <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
+                  <textarea
+                    cols={30}
+                    rows={10}
+                    id="message"
+                    placeholder="Your Opinion ..."
+                    className="iteme"
+                    autoComplete="off"
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                  {errors.message && <div className="error-txt">{errors.message}</div>}
+                </div>
+    
+                <button type="submit" id="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+export default Contact;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\footer.css
+.div {
+    background-color: darkmagenta;
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\Footer.jsx
+import "./footer.css"
+
+const Footer = () => {
+    return (
+    <div className="div">Footer</div>
+    )
+}
+
+export default Footer
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\home.css
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.text-content {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    overflow: hidden;
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
+}
+
+.title::before,
+.title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c);
+    animation: lineShift 4s linear infinite;
+}
+
+.title::before {
+    top: 0;
+    left: -100%;
+}
+
+.title::after {
+    bottom: 0;
+    right: -100%;
+}
+
+.title:hover::before {
+    left: 100%;
+}
+
+.title:hover::after {
+    right: 100%;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes lineShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+.title:hover {
+    animation: glitch 0.5s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: #34495e;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-out 0.5s both;
+}
+
+.highlight {
+    color: #eb1b74;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #eb1b74;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.highlight:hover::after {
+    transform: scaleX(1);
+}
+
+.location-icon {
+    margin-left: 0.5rem;
+    color: #1c2a4f;
+    animation: bounce 2s infinite;
+}
+
+.social-links {
+    margin-top: 2rem;
+}
+
+.social-icon {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+    color: #7f8c8d;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #eb1b74;
+    transform: translateY(-5px) rotate(360deg);
+}
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 15px 40px rgba(235, 27, 116, 0.2);
+}
+
+.profile-image:hover {
+    box-shadow: 0 15px 40px rgba(235, 27, 116, 0.2);
+}
+
+.tech-stack {
+    margin-top: 6rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.tech-stack-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.tech-stack-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background-color: #eb1b74;
+    transform: translateX(-50%);
+}
+
+.tech-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.tech-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.tech-icon-wrapper:hover {
+    transform: translateY(-10px);
+}
+
+.tech-icons i {
+    font-size: 5rem;
+    color: #34495e;
+    transition: all 0.3s ease;
+}
+
+.tech-icons i:hover {
+    color: #eb1b74;
+    filter: drop-shadow(0 0 10px rgba(235, 27, 116, 0.5));
+}
+
+.tech-name {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #7f8c8d;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.tech-icon-wrapper:hover .tech-name {
+    opacity: 1;
+    transform: translateY(5px);
+}
+
+/* Background shapes */
+.shape {
+    position: absolute;
+    background-color: rgba(235, 27, 116, 0.1);
+    border-radius: 50%;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes floatImage {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .text-content {
+        padding-right: 0;
+        margin-top: 2rem;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .tech-icons {
+        gap: 2rem;
+    }
+
+    .tech-icons i {
+        font-size: 4rem;
+    }
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\Home.jsx
+
+import "./home.css";
+
+const Home = () => {
+    return (
+        <div className="home-container">
+            <div className="content-wrapper">
+                <div className="text-content">
+                    <h1 className="title">Junior Front-End Developer</h1>
+                    <p className="subtitle">
+                        Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
+                        A passionate Front-End Developer based in Kosovo - Germany.
+                        <i className="fas fa-map-marker-alt location-icon"></i>
+                    </p>
+                    <div className="social-links">
+                        <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
+                            <i className="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.github.com/trimooo" target="_blank" rel="noopener noreferrer" className="social-icon github">
+                            <i className="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div className="image-content">
+                    <img src="../../small-leo.png" alt="Leotrim Thaqi" className="profile-image" />
+                </div>
+            </div>
+            <div className="tech-stack">
+    <h2 className="tech-stack-title">Tech Stack</h2>
+    <div className="tech-icons">
+        {['html5', 'css3-alt', 'js', 'php', 'react', 'sass', 'bootstrap', ].map((tech, index) => (
+            <div key={index} className="tech-icon-wrapper">
+                <i className={`fab fa-${tech}`}></i>
+                <span className="tech-name">{tech.replace('-alt', '').toUpperCase()}</span>
+            </div>
+        ))}
+    </div>
+</div>
+        </div>
+    )
+}
+
+export default Home;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\navbar\navbar.css
+@keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .logos {
+    overflow: hidden;
+    padding: 60px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .logos:before,
+  .logos:after {
+    position: absolute;
+    top: 0;
+    width: 2  50px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+  
+  .logos:before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:after {
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:hover .logos-slide {
+    animation-play-state: paused;
+  }
+  
+  .logos-slide {
+    display: inline-block;
+    animation: 35s slide infinite linear;
+    font-size: 9em;
+  }
+  
+
+  
+  @media (max-width: 450px) {
+    .logos-slide {
+      font-size: 4em;
+    }
+    
+    .logo {
+      
+      left: 50px !important;
+    }
+  }
+
+
+
+  .logo {
+    position: relative;
+    left: 10%;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\navbar\Navbar.jsx
+import React, { useState } from 'react';
+import './navbar.css';
+
+const Navbar = () => {
+  const [offcanvasVisible, setOffcanvasVisible] = useState(false);
+
+  const toggleOffcanvas = () => {
+    setOffcanvasVisible(!offcanvasVisible);
+  };
+
+  return (
+    <nav className="navbar navbar-white bg-white" style={{ fontFamily: "'Special Elite', cursive" }}>
+      <div className="container-fluid">
+        <a className="navbar-brand fs-1 logo" id="home" href="#home">
+          <img src="../../image-250x70.png" alt="Logo" height={50} />
+        </a>
+        <div className="d-block d-md-none">
+          <button className="navbar-toggler" type="button" onClick={toggleOffcanvas} aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+        </div>
+        <div className={`offcanvas ${offcanvasVisible ? 'show' : ''}`} id="offcanvasNavbar">
+          <div className="offcanvas-header">
+            <h1 className="offcanvas-title" id="offcanvasNavbarLabel">
+              <img src="../../image-250x70.png" height={50} alt="Logo" />
+            </h1>
+            <button type="button" className="btn-close" onClick={toggleOffcanvas} aria-label="Close" />
+          </div>
+          <div className="offcanvas-body">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#home">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#about">About</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#projects">Projects</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul className="nav d-none d-md-flex">
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#home">Home</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#about">About</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#projects">Projects</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\projects\projects.css
+.projects-section {
+    padding: 4rem 0;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 3rem;
+  }
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 0;
+    padding-top: 60%; /* 5:3 Aspect Ratio */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .project-content {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-badge {
+    background-color: #e8d4;
+    color: #eb1b74;
+    padding: 0.15rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  }
+  
+  .project-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-github {
+    background-color: #24292e;
+    color: #fff;
+  }
+  
+  .btn-demo {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+
+  .btn i {
+    margin-right: 0.3rem;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\projects\Projects.jsx
+
+import './projects.css';
+
+const ProjectCard = ({ title, image, technologies, githubLink, demoLink, description }) => {
+    return (
+      <div className="project-card">
+        <div className="project-image">
+          <img src={image} alt={title} />
+        </div>
+        <div className="project-content">
+          <h3 className="project-title">{title}</h3>
+          <div className="project-technologies">
+            {technologies.map((tech, index) => (
+              <span key={index} className="tech-badge">{tech}</span>
+            ))}
+          </div>
+          <p className="project-description" title={description}>
+            {description}
+          </p>
+          <div className="project-links">
+            {githubLink && (
+              <a href={githubLink} target="_blank" rel="noopener noreferrer" className="btn btn-github">
+                <i className="fab fa-github"></i> GitHub
+              </a>
+            )}
+            {demoLink && (
+              <a href={demoLink} target="_blank" rel="noopener noreferrer" className="btn btn-demo">
+                <i className="fas fa-external-link-alt"></i> Demo
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+const Projects = () => {
+  const projectsData = [
+    {
+      title: "devleo Tracker",
+      image: "../../devleo-tracker.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: null,
+      demoLink: "https://budget-tracker-liart.vercel.app",
+      description: "devleo Tracker is a web application for managing income and expenses. Users can add money to their account and track their spending to see how much they've saved or spent."
+    },
+    {
+      title: "Budget-App",
+      image: "../../budget.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: "https://github.com/trimooo/Budget-App",
+      demoLink: "https://budget-app-amber.vercel.app/",
+      description: "The Budget App is an intuitive financial management tool that helps individuals and businesses track their income and expenses effectively."
+    },
+    {
+      title: "Type Test",
+      image: "../../type-test-png.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: "https://github.com/trimooo/Type-Test-App",
+      demoLink: "https://type-test-app-tau.vercel.app/",
+      description: "Test App is a compact web application designed to streamline the testing process and facilitate efficient quality assurance."
+    },
+    {
+      title: "Portfolio demo",
+      image: "../../Portfolio-leo.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: null,
+      demoLink: "https://trimoocv.pages.dev/",
+      description: "This web application exemplifies my expertise in front-end development, utilizing HTML, CSS, and JavaScript to create a modern and visually appealing interface."
+    },
+    // You can add more projects here...
+  ];
+
+  return (
+    <section className="projects-section">
+      <div className="container">
+        <h1 className="section-title" id="projects">Projects</h1>
+        <p className="section-subtitle">Each project is a unique piece of development</p>
+        <div className="projects-grid">
+          {projectsData.map((project, index) => (
+            <ProjectCard key={index} {...project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Projects;
+
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\about\about.css
+.about-section {
+    padding: 5rem 0;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #333;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.about-image {
+    flex: 1;
+    max-width: 400px;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+    flex: 2;
+}
+
+.about-subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+.about-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-badge {
+    background-color: #e8d4e4;
+    color: #eb1b74;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+    background-color: #eb1b74;
+    color: white;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .about-image {
+        max-width: 100%;
+    }
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\about\About.jsx
+
+import "./about.css";
+
+const About = () => {
+    return (
+        <section className="about-section">
+            <div className="container">
+                <h1 className="section-title" id="about">About Me</h1>
+                <div className="about-content">
+                    <div className="about-image">
+                        <img src="../../full-image-leo.png" alt="Leotrim Photo" className="profile-image" />
+                    </div>
+                    <div className="about-text">
+                        <h2 className="about-subtitle">A dedicated Front-End Developer based in Kosovo.</h2>
+                        <p className="about-description">
+                            As a Junior Front-End Developer, I possess an impressive arsenal
+                            of skills in HTML, CSS, JavaScript, React, Bootstrap and SCSS. I
+                            excel in designing and maintaining responsive websites that
+                            offer a smooth user experience. My expertise lies in crafting
+                            dynamic, engaging interfaces through writing clean and optimized
+                            code and utilizing cutting-edge development tools and
+                            techniques. I am also a team player who thrives in collaborating
+                            with cross-functional teams to produce outstanding web
+                            applications.
+                        </p>
+                        <div className="skills-container">
+                            {['HTML', 'CSS', 'JavaScript', 'PHP', 'React', 'Sass', 'Bootstrap'].map((skill, index) => (
+                                <span key={index} className="skill-badge">{skill}</span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+export default About;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\contact.css
+.concst{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.conc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+.contact form {
+    width: 600px;
+    height: 100%;
+    text-align: center;
+  }
+  
+  form .input-box {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .input-box .input-field {
+    width: 48.5%;
+  }
+  
+  .field .iteme {
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    border: 2px solid #555;
+    outline: none;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #000000ed;
+    margin: 20px 0;
+  }
+
+  .itemsubj {
+    padding: 100%;
+  }
+  
+  .field.error .iteme {
+    border-color: red;
+  }
+  
+  .field .item::placeholder {
+    color: rgba(255, 255, 255, .3)
+  }
+  
+  .field .error-txt {
+    font-size: 14.5px;
+    color: red;
+    text-align: left;
+    margin: -5px 0 10px;
+    display: none;
+  }
+  
+  .field.error .error-txt{
+    display: block;
+  }
+  
+  .form .textarea-filed .error-txt {
+    margin-top: -10px;
+  }
+  
+  form .textarea-filed {
+    resize: none;
+  }
+  
+  form button {
+    padding: 12px 32px;
+    background: #000;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #000;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  form button:hover {
+    box-shadow: none;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\Contact.jsx
+import React, { useState } from "react";
+import Swal from "sweetalert2"
+import "./contact.css";
+
+const Contact = () => {
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    
+      const [errors, setErrors] = useState({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: ""
+      });
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
+        }));
+      };
+    
+      const validateEmail = (email) => {
+        const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
+        return emailRegex.test(email);
+      };
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        let valid = true;
+    
+        if (!formData.fullName) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            fullName: "Full Name can't be blank"
+          }));
+        }
+        if (!formData.email || !validateEmail(formData.email)) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: formData.email ? "Please enter a valid email address" : "Email Address can't be blank"
+          }));
+        }
+        if (!formData.subject) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            subject: "Subject can't be blank"
+          }));
+        }
+        if (!formData.message) {
+          valid = false;
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            message: "Message can't be blank"
+          }));
+        }
+    
+        if (valid) {
+          sendEmail();
+          setFormData({
+            fullName: "",
+            email: "",
+            subject: "",
+            message: ""
+          });
+          Swal.fire({
+            title: "SUCCESS!",
+            text: "Message sent successfully!",
+            icon: "success"
+          });
+        }
+      };
+    
+      const sendEmail = () => {
+        const bodyMessage = `Full Name: ${formData.fullName}<br>
+        Email: ${formData.email}<br> 
+        Message: ${formData.message}`;
+    
+        window.Email.send({
+          SecureToken: "9065bdcd-5ddb-4e51-bc8a-dafeb0d68a3b",
+          Host: "smtp.elasticemail.com",
+          Username: "leotrimthaqi605@gmail.com",
+          Password: "B12540305697B69B37F574AC2A926F0F1535",
+          To: 'leo@devleo.de',
+          From: "leo@devleo.de",
+          Subject: formData.subject,
+          Body: bodyMessage
+        }).then(
+          (message) => {
+            if (message === "OK") {
+              Swal.fire({
+                title: "SUCCESS!",
+                text: "Message sent successfully!",
+                icon: "success"
+              });
+            }
+          }
+        );
+      };
+
+  return (
+
+        <div className="container mb-14 justify-content-center text-center">
+          <h2 className="fw-bold display-4 fa-5x title contact" id="contact">
+            Contact
+          </h2>
+    
+          <div className="concst">
+            <div className="conc">
+              <form onSubmit={handleSubmit}>
+                <div className="input-box">
+                  <div className={`input-field field ${errors.fullName ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="fullName"
+                      placeholder="Full Name"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                    />
+                    {errors.fullName && <div className="error-txt">{errors.fullName}</div>}
+                  </div>
+                  <div className={`input-field field ${errors.email ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="email"
+                      placeholder="Email Address"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <div className="error-txt email">{errors.email}</div>}
+                  </div>
+                </div>
+    
+                <div className="input-box">
+                  <div className={`input-field field ${errors.subject ? "error" : ""}`}>
+                    <input
+                      type="text"
+                      id="subject"
+                      placeholder="Subject"
+                      className="iteme"
+                      autoComplete="off"
+                      value={formData.subject}
+                      onChange={handleChange}
+                    />
+                    {errors.subject && <div className="error-txt">{errors.subject}</div>}
+                  </div>
+                </div>
+    
+                <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
+                  <textarea
+                    cols={30}
+                    rows={10}
+                    id="message"
+                    placeholder="Your Opinion ..."
+                    className="iteme"
+                    autoComplete="off"
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                  {errors.message && <div className="error-txt">{errors.message}</div>}
+                </div>
+    
+                <button type="submit" id="submit">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+export default Contact;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\footer.css
+.div {
+    background-color: darkmagenta;
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\Footer.jsx
+import "./footer.css"
+
+const Footer = () => {
+    return (
+    <div className="div">Footer</div>
+    )
+}
+
+export default Footer
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\home.css
+.home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.text-content {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    overflow: hidden;
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
+}
+
+.title::before,
+.title::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c);
+    animation: lineShift 4s linear infinite;
+}
+
+.title::before {
+    top: 0;
+    left: -100%;
+}
+
+.title::after {
+    bottom: 0;
+    right: -100%;
+}
+
+.title:hover::before {
+    left: 100%;
+}
+
+.title:hover::after {
+    right: 100%;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes lineShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+.title:hover {
+    animation: glitch 0.5s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: #34495e;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-out 0.5s both;
+}
+
+.highlight {
+    color: #eb1b74;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #eb1b74;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.highlight:hover::after {
+    transform: scaleX(1);
+}
+
+.location-icon {
+    margin-left: 0.5rem;
+    color: #1c2a4f;
+    animation: bounce 2s infinite;
+}
+
+.social-links {
+    margin-top: 2rem;
+}
+
+.social-icon {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+    color: #7f8c8d;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #eb1b74;
+    transform: translateY(-5px) rotate(360deg);
+}
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 15px 40px rgba(235, 27, 116, 0.2);
+}
+
+.profile-image:hover {
+    box-shadow: 0 15px 40px rgba(235, 27, 116, 0.2);
+}
+
+.tech-stack {
+    margin-top: 6rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.tech-stack-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.tech-stack-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 50px;
+    height: 3px;
+    background-color: #eb1b74;
+    transform: translateX(-50%);
+}
+
+.tech-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.tech-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.tech-icon-wrapper:hover {
+    transform: translateY(-10px);
+}
+
+.tech-icons i {
+    font-size: 5rem;
+    color: #34495e;
+    transition: all 0.3s ease;
+}
+
+.tech-icons i:hover {
+    color: #eb1b74;
+    filter: drop-shadow(0 0 10px rgba(235, 27, 116, 0.5));
+}
+
+.tech-name {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #7f8c8d;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.tech-icon-wrapper:hover .tech-name {
+    opacity: 1;
+    transform: translateY(5px);
+}
+
+/* Background shapes */
+.shape {
+    position: absolute;
+    background-color: rgba(235, 27, 116, 0.1);
+    border-radius: 50%;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    left: -150px;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes floatImage {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .text-content {
+        padding-right: 0;
+        margin-top: 2rem;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .tech-icons {
+        gap: 2rem;
+    }
+
+    .tech-icons i {
+        font-size: 4rem;
+    }
+}
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\Home.jsx
+
+import "./home.css";
+
+const Home = () => {
+    return (
+        <div className="home-container">
+            <div className="content-wrapper">
+                <div className="text-content">
+                    <h1 className="title">Junior Front-End Developer</h1>
+                    <p className="subtitle">
+                        Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
+                        A passionate Front-End Developer based in Kosovo - Germany.
+                        <i className="fas fa-map-marker-alt location-icon"></i>
+                    </p>
+                    <div className="social-links">
+                        <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
+                            <i className="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.github.com/trimooo" target="_blank" rel="noopener noreferrer" className="social-icon github">
+                            <i className="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                <div className="image-content">
+                    <img src="../../small-leo.png" alt="Leotrim Thaqi" className="profile-image" />
+                </div>
+            </div>
+            <div className="tech-stack">
+    <h2 className="tech-stack-title">Tech Stack</h2>
+    <div className="tech-icons">
+        {['html5', 'css3-alt', 'js', 'php', 'react', 'sass', 'bootstrap', ].map((tech, index) => (
+            <div key={index} className="tech-icon-wrapper">
+                <i className={`fab fa-${tech}`}></i>
+                <span className="tech-name">{tech.replace('-alt', '').toUpperCase()}</span>
+            </div>
+        ))}
+    </div>
+</div>
+        </div>
+    )
+}
+
+export default Home;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\navbar\navbar.css
+@keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .logos {
+    overflow: hidden;
+    padding: 60px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .logos:before,
+  .logos:after {
+    position: absolute;
+    top: 0;
+    width: 2  50px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+  
+  .logos:before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:after {
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:hover .logos-slide {
+    animation-play-state: paused;
+  }
+  
+  .logos-slide {
+    display: inline-block;
+    animation: 35s slide infinite linear;
+    font-size: 9em;
+  }
+  
+
+  
+  @media (max-width: 450px) {
+    .logos-slide {
+      font-size: 4em;
+    }
+    
+    .logo {
+      
+      left: 50px !important;
+    }
+  }
+
+
+
+  .logo {
+    position: relative;
+    left: 10%;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\navbar\Navbar.jsx
+import React, { useState } from 'react';
+import './navbar.css';
+
+const Navbar = () => {
+  const [offcanvasVisible, setOffcanvasVisible] = useState(false);
+
+  const toggleOffcanvas = () => {
+    setOffcanvasVisible(!offcanvasVisible);
+  };
+
+  return (
+    <nav className="navbar navbar-white bg-white" style={{ fontFamily: "'Special Elite', cursive" }}>
+      <div className="container-fluid">
+        <a className="navbar-brand fs-1 logo" id="home" href="#home">
+          <img src="../../image-250x70.png" alt="Logo" height={50} />
+        </a>
+        <div className="d-block d-md-none">
+          <button className="navbar-toggler" type="button" onClick={toggleOffcanvas} aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon" />
+          </button>
+        </div>
+        <div className={`offcanvas ${offcanvasVisible ? 'show' : ''}`} id="offcanvasNavbar">
+          <div className="offcanvas-header">
+            <h1 className="offcanvas-title" id="offcanvasNavbarLabel">
+              <img src="../../image-250x70.png" height={50} alt="Logo" />
+            </h1>
+            <button type="button" className="btn-close" onClick={toggleOffcanvas} aria-label="Close" />
+          </div>
+          <div className="offcanvas-body">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#home">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#about">About</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#projects">Projects</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-black fw-bold hover-shadow-soft" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <ul className="nav d-none d-md-flex">
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#home">Home</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#about">About</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#projects">Projects</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark hover-shadow-soft fs-3 links" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\projects\projects.css
+.projects-section {
+    padding: 4rem 0;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 3rem;
+  }
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 0;
+    padding-top: 60%; /* 5:3 Aspect Ratio */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .project-content {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-badge {
+    background-color: #e8d4;
+    color: #eb1b74;
+    padding: 0.15rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+  }
+  
+  .project-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .project-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-github {
+    background-color: #24292e;
+    color: #fff;
+  }
+  
+  .btn-demo {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+
+  .btn i {
+    margin-right: 0.3rem;
+  }
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\projects\Projects.jsx
+
+import './projects.css';
+
+const ProjectCard = ({ title, image, technologies, githubLink, demoLink, description }) => {
+    return (
+      <div className="project-card">
+        <div className="project-image">
+          <img src={image} alt={title} />
+        </div>
+        <div className="project-content">
+          <h3 className="project-title">{title}</h3>
+          <div className="project-technologies">
+            {technologies.map((tech, index) => (
+              <span key={index} className="tech-badge">{tech}</span>
+            ))}
+          </div>
+          <p className="project-description" title={description}>
+            {description}
+          </p>
+          <div className="project-links">
+            {githubLink && (
+              <a href={githubLink} target="_blank" rel="noopener noreferrer" className="btn btn-github">
+                <i className="fab fa-github"></i> GitHub
+              </a>
+            )}
+            {demoLink && (
+              <a href={demoLink} target="_blank" rel="noopener noreferrer" className="btn btn-demo">
+                <i className="fas fa-external-link-alt"></i> Demo
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+const Projects = () => {
+  const projectsData = [
+    {
+      title: "devleo Tracker",
+      image: "../../devleo-tracker.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: null,
+      demoLink: "https://budget-tracker-liart.vercel.app",
+      description: "devleo Tracker is a web application for managing income and expenses. Users can add money to their account and track their spending to see how much they've saved or spent."
+    },
+    {
+      title: "Budget-App",
+      image: "../../budget.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: "https://github.com/trimooo/Budget-App",
+      demoLink: "https://budget-app-amber.vercel.app/",
+      description: "The Budget App is an intuitive financial management tool that helps individuals and businesses track their income and expenses effectively."
+    },
+    {
+      title: "Type Test",
+      image: "../../type-test-png.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: "https://github.com/trimooo/Type-Test-App",
+      demoLink: "https://type-test-app-tau.vercel.app/",
+      description: "Test App is a compact web application designed to streamline the testing process and facilitate efficient quality assurance."
+    },
+    {
+      title: "Portfolio demo",
+      image: "../../Portfolio-leo.png",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      githubLink: null,
+      demoLink: "https://trimoocv.pages.dev/",
+      description: "This web application exemplifies my expertise in front-end development, utilizing HTML, CSS, and JavaScript to create a modern and visually appealing interface."
+    },
+    // You can add more projects here...
+  ];
+
+  return (
+    <section className="projects-section">
+      <div className="container">
+        <h1 className="section-title" id="projects">Projects</h1>
+        <p className="section-subtitle">Each project is a unique piece of development</p>
+        <div className="projects-grid">
+          {projectsData.map((project, index) => (
+            <ProjectCard key={index} {...project} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Projects;
+
+
