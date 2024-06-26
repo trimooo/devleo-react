@@ -1,7 +1,13 @@
 .theme-toggle {
     position: relative;
     display: inline-block;
+    left: 20%;
   }
+@media (max-width: 480px) {
+  .theme-toggle {
+    left: 5%;
+  }
+}
   
   .theme-toggle input {
     opacity: 0;
@@ -13,10 +19,10 @@
     display: block;
     width: 80px;
     height: 40px;
-    background-color: #1e1e1e;
-    border-radius: 40px;
+    background-color: #4a4a7d;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.4s ease-in-out;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
@@ -28,19 +34,21 @@
     width: 34px;
     left: 3px;
     bottom: 3px;
-    background-color: #FFD700;
-    border-radius: 50%;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    background-color: #FFD700 !important;
+    border-radius: 50% !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
   input:checked + .toggle-label {
     background-color: #4a4a7d;
   }
+
+
   
   input:checked + .toggle-label .toggle-button {
     transform: translateX(40px);
-    background-color: #C0C0C0;
+    background-color: #C0C0C0 !important;
+    transition: 0.4s ease-in;
   }
   
   .crater {
@@ -120,7 +128,7 @@
   body.dark-mode {
     background-color: #1a1a2e;
     color: #fff;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.4s ease, color 0.3s ease;
   }
   
   /* Make general text white in dark mode */
@@ -131,7 +139,7 @@
   body.dark-mode h4,
   body.dark-mode h5,
   body.dark-mode h6,
-  body.dark-mode div:not(.card):not(.project-description):not(.project-title):not(div):not(.easter-egg):not(.error-txt) {
+  body.dark-mode div:not(.card):not(.project-description):not(.project-title):not(div):not(.easter-egg):not(.error-txt):not(.iteme) {
     color: #fff;
     transition: color 0.3s ease;
   }
@@ -150,6 +158,9 @@
     background-color: #f0f0f0;
   }
   
+  body.dark-mode .iteme:focus {
+    color: #fff;
+  }
 
   body.dark-mode .easter-egg {
     color: #1e1e1e;

@@ -9,7 +9,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-white bg-white" style={{ fontFamily: "'Special Elite', cursive" }}>
+    <nav className="navbar navbar-white bg-white">
       <div className="container-fluid">
         <a className="navbar-brand fs-1 logo" id="home" href="#home">
           <img src="../../image-250x70.png" alt="Logo" height={50} />

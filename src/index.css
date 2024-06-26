@@ -41,13 +41,9 @@ body::-webkit-scrollbar-thumb:hover {
     height: 350px;
 }
 
-.title {
-    font-family: 'Special Elite', cursive;
-}
 
-.titlee {
-    font-family: 'Special Elite', cursive;
-}
+
+
 
 @media (min-width: 768px) {
     .card_img {
