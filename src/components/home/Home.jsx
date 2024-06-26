@@ -12,8 +12,8 @@ const Home = () => {
         <div className="home-container">
             <div className="content-wrapper">
                 <div className="text-content">
-                    <h1 className="title light-text">Junior Front-End Developer</h1>
-                    <p className="subtitle light-text" >
+                    <h1 className="title">Junior Front-End Developer</h1>
+                    <p className="subtitle" >
                         Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
                         A passionate Front-End Developer based in Kosovo - Germany.
                         <i className="fas fa-map-marker-alt location-icon"></i>

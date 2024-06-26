@@ -29,7 +29,7 @@
 }
 
 .profile-image {
-    width: 100%;
+    width: 50%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -127,39 +127,41 @@ const About = () => {
 export default About;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\contact.css
-.concst{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-.conc{
+.conc {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-
-
-
+.contact {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
 
 .contact form {
     width: 600px;
-    height: 100%;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
-  
-  form .input-box {
+    transition: transform 0.3s ease;
+}
+
+.contact form:hover {
+    transform: translateY(-5px);
+}
+
+form .input-box {
     display: flex;
     justify-content: space-around;
-  }
-  
-  .input-box .input-field {
+}
+
+.input-box .input-field {
     width: 48.5%;
-  }
-  
-  .field .iteme {
+}
+
+.field .iteme {
     width: 100%;
     padding: 18px;
     background: transparent;
@@ -169,267 +171,420 @@ export default About;
     font-size: 16px;
     color: #000000ed;
     margin: 20px 0;
-  }
+    transition: all 0.3s ease;
+}
 
-  .itemsubj {
-    padding: 100%;
-  }
-  
-  .field.error .iteme {
+.field.error .iteme {
     border-color: red;
-  }
-  
-  .field .item::placeholder {
-    color: rgba(255, 255, 255, .3)
-  }
-  
-  .field .error-txt {
+}
+
+.field .item::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+.field .error-txt {
     font-size: 14.5px;
     color: red;
     text-align: left;
     margin: -5px 0 10px;
     display: none;
-  }
-  
-  .field.error .error-txt{
+}
+
+.field.error .error-txt {
     display: block;
-  }
-  
-  .form .textarea-filed .error-txt {
-    margin-top: -10px;
-  }
-  
-  form .textarea-filed {
-    resize: none;
-  }
-  
-  form button {
+}
+
+.textarea-field textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+form button {
     padding: 12px 32px;
-    background: #000;
+    background: #eb1b74;
     border: none;
     outline: none;
-    border-radius: 6px;
-    box-shadow: 0 0 10px #000;
+    border-radius: 30px;
     font-size: 16px;
     color: #fff;
     letter-spacing: 1px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 20px;
-  }
-  
-  form button:hover {
-    box-shadow: none;
-  }
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(235, 27, 116, 0.3);
+}
+
+
+form button:hover {
+    background: #d41968;
+    box-shadow: 0 7px 20px rgba(235, 27, 116, 0.4);
+    transform: translateY(-2px);
+}
+
+form button:active {
+    transform: translateY(0);
+}
+
+
+
+.field .iteme:hover {
+    border-color: #eb1b74;
+}
+
+
+/* Add a subtle animation for error messages */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.field.error .error-txt {
+    animation: shake 0.6s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 650px) {
+    .contact form {
+        width: 90%;
+        padding: 30px;
+    }
+
+    form .input-box {
+        flex-direction: column;
+    }
+
+    .input-box .input-field {
+        width: 100%;
+    }
+}
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\Contact.jsx
-import React, { useState } from "react";
-import Swal from "sweetalert2"
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import emailjs from '@emailjs/browser';
 import "./contact.css";
 
 const Contact = () => {
-
     const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    
-      const [errors, setErrors] = useState({
-        fullName: "",
+      Name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+  
+    const [errors, setErrors] = useState({
+      Name: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
+  
+    const [ipAddress, setIpAddress] = useState("");
+  
+    useEffect(() => {
+      // Fetch IP address when component mounts
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => setIpAddress(data.ip))
+        .catch(error => console.error('Error fetching IP:', error));
+    }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
+    }));
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let valid = true;
+  
+    Object.keys(formData).forEach(key => {
+      if (!formData[key]) {
+        valid = false;
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [key]: `${key.charAt(0).toUpperCase() + key.slice(1)} can't be blank`
+        }));
+      }
+    });
+  
+    if (!validateEmail(formData.email)) {
+      valid = false;
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Please enter a valid email address"
+      }));
+    }
+  
+    if (valid) {
+      await sendEmail();
+      setFormData({
+        Name: "",
         email: "",
         subject: "",
         message: ""
       });
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-    
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
-        }));
-      };
-    
-      const validateEmail = (email) => {
-        const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
-        return emailRegex.test(email);
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        let valid = true;
-    
-        if (!formData.fullName) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            fullName: "Full Name can't be blank"
-          }));
-        }
-        if (!formData.email || !validateEmail(formData.email)) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            email: formData.email ? "Please enter a valid email address" : "Email Address can't be blank"
-          }));
-        }
-        if (!formData.subject) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            subject: "Subject can't be blank"
-          }));
-        }
-        if (!formData.message) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            message: "Message can't be blank"
-          }));
-        }
-    
-        if (valid) {
-          sendEmail();
-          setFormData({
-            fullName: "",
-            email: "",
-            subject: "",
-            message: ""
-          });
-          Swal.fire({
-            title: "SUCCESS!",
-            text: "Message sent successfully!",
-            icon: "success"
-          });
-        }
-      };
-    
-      const sendEmail = () => {
-        const bodyMessage = `Full Name: ${formData.fullName}<br>
-        Email: ${formData.email}<br> 
-        Message: ${formData.message}`;
-    
-        window.Email.send({
-          SecureToken: "9065bdcd-5ddb-4e51-bc8a-dafeb0d68a3b",
-          Host: "smtp.elasticemail.com",
-          Username: "leotrimthaqi605@gmail.com",
-          Password: "B12540305697B69B37F574AC2A926F0F1535",
-          To: 'leo@devleo.de',
-          From: "leo@devleo.de",
-          Subject: formData.subject,
-          Body: bodyMessage
-        }).then(
-          (message) => {
-            if (message === "OK") {
-              Swal.fire({
-                title: "SUCCESS!",
-                text: "Message sent successfully!",
-                icon: "success"
-              });
-            }
-          }
-        );
-      };
+    }
+  };
+
+  const sendEmail = async () => {
+    const templateParams = {
+      from_name: formData.Name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      ip_address: ipAddress
+    };
+
+    try {
+      const result = await emailjs.send(
+        'service_7nf08et',
+        'template_f8sz7o9',
+        templateParams,
+        'user_eJg96NeKIJLf1MWAYCzvt'
+      );
+
+      if (result.text === 'OK') {
+        Swal.fire({
+          title: "SUCCESS!",
+          text: "Message sent successfully!",
+          icon: "success"
+        });
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      Swal.fire({
+        title: "ERROR!",
+        text: "Unable to send email at this time. Please try again later.",
+        icon: "error"
+      });
+    }
+  };
 
   return (
-
-        <div className="container mb-14 justify-content-center text-center">
-          <h2 className="fw-bold display-4 fa-5x title contact" id="contact">
-            Contact
-          </h2>
-    
-          <div className="concst">
-            <div className="conc">
-              <form onSubmit={handleSubmit}>
-                <div className="input-box">
-                  <div className={`input-field field ${errors.fullName ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="fullName"
-                      placeholder="Full Name"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                    />
-                    {errors.fullName && <div className="error-txt">{errors.fullName}</div>}
-                  </div>
-                  <div className={`input-field field ${errors.email ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="email"
-                      placeholder="Email Address"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                    {errors.email && <div className="error-txt email">{errors.email}</div>}
-                  </div>
-                </div>
-    
-                <div className="input-box">
-                  <div className={`input-field field ${errors.subject ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="subject"
-                      placeholder="Subject"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.subject}
-                      onChange={handleChange}
-                    />
-                    {errors.subject && <div className="error-txt">{errors.subject}</div>}
-                  </div>
-                </div>
-    
-                <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
-                  <textarea
-                    cols={30}
-                    rows={10}
-                    id="message"
-                    placeholder="Your Opinion ..."
-                    className="iteme"
-                    autoComplete="off"
-                    value={formData.message}
-                    onChange={handleChange}
-                  />
-                  {errors.message && <div className="error-txt">{errors.message}</div>}
-                </div>
-    
-                <button type="submit" id="submit">
-                  Submit
-                </button>
-              </form>
+    <div className="container mb-10 justify-content-center text-center">
+      <h1 className="section-title" id="contact">
+        Contact Me
+      </h1>
+      <div className="concst">
+        <div className="conc">
+          <form onSubmit={handleSubmit}>
+            <div className="input-box">
+              <div className={`input-field field ${errors.Name ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="Name"
+                  placeholder="Full Name"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.Name}
+                  onChange={handleChange}
+                />
+                {errors.Name && <div className="error-txt">{errors.Name}</div>}
+              </div>
+              <div className={`input-field field ${errors.email ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email Address"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                {errors.email && <div className="error-txt email">{errors.email}</div>}
+              </div>
             </div>
-          </div>
+
+            <div className="input-box">
+              <div className={`input-field field ${errors.subject ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.subject}
+                  onChange={handleChange}
+                />
+                {errors.subject && <div className="error-txt">{errors.subject}</div>}
+              </div>
+            </div>
+
+            <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
+              <textarea
+                name="message"
+                placeholder="Your Opinion ..."
+                className="iteme"
+                autoComplete="off"
+                value={formData.message}
+                onChange={handleChange}
+              />
+              {errors.message && <div className="error-txt">{errors.message}</div>}
+            </div>
+
+            <button type="submit">Submit</button>
+          </form>
         </div>
-      );
-    };
+      </div>
+    </div>
+  );
+};
 
 export default Contact;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\footer.css
-.div {
-    background-color: darkmagenta;
+.footer {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 2rem 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-logo {
+    flex: 1;
+}
+
+.ascii-art {
+    font-size: 0.7rem;
+    line-height: 1;
+    color: #eb1b7e;
+    margin: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    color: #d4d4d4;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-link:hover {
+    color: #569cd6;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+}
+
+.easter-egg {
+    color: #1e1e1e;
+    transition: color 0.3s ease;
+}
+
+.easter-egg:hover {
+    color: #eb1b7e;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin-bottom: 1rem;
+    }
+
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+}
+
+/* Glow effect on hover */
+.footer:hover .ascii-art {
+    text-shadow: 0 0 5px #569cd6, 0 0 10px #569cd6;
+}
+
+/* Terminal-like cursor animation */
+.footer-bottom p::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\Footer.jsx
-import "./footer.css"
+
+import "./footer.css";
 
 const Footer = () => {
     return (
-    <div className="div">Footer</div>
-    )
+        <footer className="footer">
+            <div className="footer-content">
+                <div className="footer-logo">
+                    <pre className="ascii-art">
+                        {`
+   _____                   __
+  |  __ \\                 |  |
+  | |  | | _____    ___   |  | ___ ______
+  | |  | |/ _  \\  \\  / / /|  |/ _  | __ |
+  | |__| |  __/ \\   V / / |  | __/ ||__||
+  |_____/ \\___|  \\ _ / /  |__|\\__| |____|
+                        `}
+                    </pre>
+                </div>
+                <div className="footer-links">
+                    <a href="https://www.github.com/trimooo" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.twitter.com/LeotrimTh" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/_leotrim.th" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div className="footer-bottom">
+                <p>&copy; {new Date().getFullYear()} DevLeo. All rights reserved.</p>
+                <p className="easter-egg">{"<!-- You found the easter egg! lol  -->"}</p>
+            </div>
+        </footer>
+    );
 }
 
-export default Footer
+export default Footer;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\home.css
 .home-container {
@@ -756,13 +911,19 @@ export default Footer
 
 import "./home.css";
 
+
+
+
+
 const Home = () => {
+
+    
     return (
         <div className="home-container">
             <div className="content-wrapper">
                 <div className="text-content">
-                    <h1 className="title">Junior Front-End Developer</h1>
-                    <p className="subtitle">
+                    <h1 className="title light-text">Junior Front-End Developer</h1>
+                    <p className="subtitle light-text" >
                         Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
                         A passionate Front-End Developer based in Kosovo - Germany.
                         <i className="fas fa-map-marker-alt location-icon"></i>
@@ -1139,7 +1300,7 @@ const Projects = () => {
   ];
 
   return (
-    <section className="projects-section">
+    <section className="projects-section mb-10">
       <div className="container">
         <h1 className="section-title" id="projects">Projects</h1>
         <p className="section-subtitle">Each project is a unique piece of development</p>
@@ -1155,6 +1316,116 @@ const Projects = () => {
 
 export default Projects;
 
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\dots.jsx
+// MovingDotsBackground.js
+import React, { useEffect, useRef } from 'react';
+import { useTheme } from './ThemeContext';
+
+const MovingDotsBackground = () => {
+  const canvasRef = useRef(null);
+  const { isDarkMode } = useTheme();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const dots = [];
+    const numDots = 100;
+
+    for (let i = 0; i < numDots; i++) {
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 2,
+        dy: (Math.random() - 0.5) * 2,
+      });
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      dots.forEach((dot) => {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isDarkMode ? 'rgba(200, 200, 200, 0.5)' : 'rgba(50, 50, 50, 0.5)';
+        ctx.fill();
+
+        dot.x += dot.dx;
+        dot.y += dot.dy;
+
+        if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
+        if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isDarkMode]);
+
+  return <canvas ref={canvasRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
+};
+
+export default MovingDotsBackground;
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\ThemeContext.jsx
+// ThemeContext.js
+import { createContext, useState, useContext } from 'react';
+
+const ThemeContext = createContext();
+
+export const ThemeProvider = ({ children }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export const useTheme = () => useContext(ThemeContext);
+
+// File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\Toggle.jsx
+const ThemeToggle = () => {
+    const { isDarkMode, toggleTheme } = useTheme();
+    return (
+      <button onClick={toggleTheme}>
+        Switch to {isDarkMode ? 'Light' : 'Dark'} Mode
+      </button>
+    );
+  };
+  
+  const Content = () => {
+    const { isDarkMode } = useTheme();
+    return (
+      <div style={{
+        color: isDarkMode ? '#fff' : '#000',
+        backgroundColor: isDarkMode ? '#000' : '#fff',
+        minHeight: '100vh',
+        padding: '20px'
+      }}>
+        <h1>Your Content Here</h1>
+        <p>This text will change color based on the theme.</p>
+        <ThemeToggle />
+      </div>
+    );
+  };
+  
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\about\about.css
 .about-section {
@@ -1187,7 +1458,7 @@ export default Projects;
 }
 
 .profile-image {
-    width: 100%;
+    width: 50%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -1285,39 +1556,41 @@ const About = () => {
 export default About;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\contact.css
-.concst{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-.conc{
+.conc {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-
-
-
+.contact {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
 
 .contact form {
     width: 600px;
-    height: 100%;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
-  
-  form .input-box {
+    transition: transform 0.3s ease;
+}
+
+.contact form:hover {
+    transform: translateY(-5px);
+}
+
+form .input-box {
     display: flex;
     justify-content: space-around;
-  }
-  
-  .input-box .input-field {
+}
+
+.input-box .input-field {
     width: 48.5%;
-  }
-  
-  .field .iteme {
+}
+
+.field .iteme {
     width: 100%;
     padding: 18px;
     background: transparent;
@@ -1327,267 +1600,420 @@ export default About;
     font-size: 16px;
     color: #000000ed;
     margin: 20px 0;
-  }
+    transition: all 0.3s ease;
+}
 
-  .itemsubj {
-    padding: 100%;
-  }
-  
-  .field.error .iteme {
+.field.error .iteme {
     border-color: red;
-  }
-  
-  .field .item::placeholder {
-    color: rgba(255, 255, 255, .3)
-  }
-  
-  .field .error-txt {
+}
+
+.field .item::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+.field .error-txt {
     font-size: 14.5px;
     color: red;
     text-align: left;
     margin: -5px 0 10px;
     display: none;
-  }
-  
-  .field.error .error-txt{
+}
+
+.field.error .error-txt {
     display: block;
-  }
-  
-  .form .textarea-filed .error-txt {
-    margin-top: -10px;
-  }
-  
-  form .textarea-filed {
-    resize: none;
-  }
-  
-  form button {
+}
+
+.textarea-field textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+form button {
     padding: 12px 32px;
-    background: #000;
+    background: #eb1b74;
     border: none;
     outline: none;
-    border-radius: 6px;
-    box-shadow: 0 0 10px #000;
+    border-radius: 30px;
     font-size: 16px;
     color: #fff;
     letter-spacing: 1px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 20px;
-  }
-  
-  form button:hover {
-    box-shadow: none;
-  }
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(235, 27, 116, 0.3);
+}
+
+
+form button:hover {
+    background: #d41968;
+    box-shadow: 0 7px 20px rgba(235, 27, 116, 0.4);
+    transform: translateY(-2px);
+}
+
+form button:active {
+    transform: translateY(0);
+}
+
+
+
+.field .iteme:hover {
+    border-color: #eb1b74;
+}
+
+
+/* Add a subtle animation for error messages */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.field.error .error-txt {
+    animation: shake 0.6s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 650px) {
+    .contact form {
+        width: 90%;
+        padding: 30px;
+    }
+
+    form .input-box {
+        flex-direction: column;
+    }
+
+    .input-box .input-field {
+        width: 100%;
+    }
+}
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\contact\Contact.jsx
-import React, { useState } from "react";
-import Swal from "sweetalert2"
+import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import emailjs from '@emailjs/browser';
 import "./contact.css";
 
 const Contact = () => {
-
     const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    
-      const [errors, setErrors] = useState({
-        fullName: "",
+      Name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+  
+    const [errors, setErrors] = useState({
+      Name: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
+  
+    const [ipAddress, setIpAddress] = useState("");
+  
+    useEffect(() => {
+      // Fetch IP address when component mounts
+      fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => setIpAddress(data.ip))
+        .catch(error => console.error('Error fetching IP:', error));
+    }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
+    }));
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let valid = true;
+  
+    Object.keys(formData).forEach(key => {
+      if (!formData[key]) {
+        valid = false;
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [key]: `${key.charAt(0).toUpperCase() + key.slice(1)} can't be blank`
+        }));
+      }
+    });
+  
+    if (!validateEmail(formData.email)) {
+      valid = false;
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Please enter a valid email address"
+      }));
+    }
+  
+    if (valid) {
+      await sendEmail();
+      setFormData({
+        Name: "",
         email: "",
         subject: "",
         message: ""
       });
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-    
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: value ? "" : `${name.charAt(0).toUpperCase() + name.slice(1)} can't be blank`
-        }));
-      };
-    
-      const validateEmail = (email) => {
-        const emailRegex = /^([a-z\d-]+)@([a-z\d-]+)\.([a-z]{2,3})(\.[a-z]{2,3})?$/;
-        return emailRegex.test(email);
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        let valid = true;
-    
-        if (!formData.fullName) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            fullName: "Full Name can't be blank"
-          }));
-        }
-        if (!formData.email || !validateEmail(formData.email)) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            email: formData.email ? "Please enter a valid email address" : "Email Address can't be blank"
-          }));
-        }
-        if (!formData.subject) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            subject: "Subject can't be blank"
-          }));
-        }
-        if (!formData.message) {
-          valid = false;
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            message: "Message can't be blank"
-          }));
-        }
-    
-        if (valid) {
-          sendEmail();
-          setFormData({
-            fullName: "",
-            email: "",
-            subject: "",
-            message: ""
-          });
-          Swal.fire({
-            title: "SUCCESS!",
-            text: "Message sent successfully!",
-            icon: "success"
-          });
-        }
-      };
-    
-      const sendEmail = () => {
-        const bodyMessage = `Full Name: ${formData.fullName}<br>
-        Email: ${formData.email}<br> 
-        Message: ${formData.message}`;
-    
-        window.Email.send({
-          SecureToken: "9065bdcd-5ddb-4e51-bc8a-dafeb0d68a3b",
-          Host: "smtp.elasticemail.com",
-          Username: "leotrimthaqi605@gmail.com",
-          Password: "B12540305697B69B37F574AC2A926F0F1535",
-          To: 'leo@devleo.de',
-          From: "leo@devleo.de",
-          Subject: formData.subject,
-          Body: bodyMessage
-        }).then(
-          (message) => {
-            if (message === "OK") {
-              Swal.fire({
-                title: "SUCCESS!",
-                text: "Message sent successfully!",
-                icon: "success"
-              });
-            }
-          }
-        );
-      };
+    }
+  };
+
+  const sendEmail = async () => {
+    const templateParams = {
+      from_name: formData.Name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      ip_address: ipAddress
+    };
+
+    try {
+      const result = await emailjs.send(
+        'service_7nf08et',
+        'template_f8sz7o9',
+        templateParams,
+        'user_eJg96NeKIJLf1MWAYCzvt'
+      );
+
+      if (result.text === 'OK') {
+        Swal.fire({
+          title: "SUCCESS!",
+          text: "Message sent successfully!",
+          icon: "success"
+        });
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      Swal.fire({
+        title: "ERROR!",
+        text: "Unable to send email at this time. Please try again later.",
+        icon: "error"
+      });
+    }
+  };
 
   return (
-
-        <div className="container mb-14 justify-content-center text-center">
-          <h2 className="fw-bold display-4 fa-5x title contact" id="contact">
-            Contact
-          </h2>
-    
-          <div className="concst">
-            <div className="conc">
-              <form onSubmit={handleSubmit}>
-                <div className="input-box">
-                  <div className={`input-field field ${errors.fullName ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="fullName"
-                      placeholder="Full Name"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                    />
-                    {errors.fullName && <div className="error-txt">{errors.fullName}</div>}
-                  </div>
-                  <div className={`input-field field ${errors.email ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="email"
-                      placeholder="Email Address"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                    {errors.email && <div className="error-txt email">{errors.email}</div>}
-                  </div>
-                </div>
-    
-                <div className="input-box">
-                  <div className={`input-field field ${errors.subject ? "error" : ""}`}>
-                    <input
-                      type="text"
-                      id="subject"
-                      placeholder="Subject"
-                      className="iteme"
-                      autoComplete="off"
-                      value={formData.subject}
-                      onChange={handleChange}
-                    />
-                    {errors.subject && <div className="error-txt">{errors.subject}</div>}
-                  </div>
-                </div>
-    
-                <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
-                  <textarea
-                    cols={30}
-                    rows={10}
-                    id="message"
-                    placeholder="Your Opinion ..."
-                    className="iteme"
-                    autoComplete="off"
-                    value={formData.message}
-                    onChange={handleChange}
-                  />
-                  {errors.message && <div className="error-txt">{errors.message}</div>}
-                </div>
-    
-                <button type="submit" id="submit">
-                  Submit
-                </button>
-              </form>
+    <div className="container mb-10 justify-content-center text-center">
+      <h1 className="section-title" id="contact">
+        Contact Me
+      </h1>
+      <div className="concst">
+        <div className="conc">
+          <form onSubmit={handleSubmit}>
+            <div className="input-box">
+              <div className={`input-field field ${errors.Name ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="Name"
+                  placeholder="Full Name"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.Name}
+                  onChange={handleChange}
+                />
+                {errors.Name && <div className="error-txt">{errors.Name}</div>}
+              </div>
+              <div className={`input-field field ${errors.email ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="Email Address"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                {errors.email && <div className="error-txt email">{errors.email}</div>}
+              </div>
             </div>
-          </div>
+
+            <div className="input-box">
+              <div className={`input-field field ${errors.subject ? "error" : ""}`}>
+                <input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  className="iteme"
+                  autoComplete="off"
+                  value={formData.subject}
+                  onChange={handleChange}
+                />
+                {errors.subject && <div className="error-txt">{errors.subject}</div>}
+              </div>
+            </div>
+
+            <div className={`textarea-field field ${errors.message ? "error" : ""}`}>
+              <textarea
+                name="message"
+                placeholder="Your Opinion ..."
+                className="iteme"
+                autoComplete="off"
+                value={formData.message}
+                onChange={handleChange}
+              />
+              {errors.message && <div className="error-txt">{errors.message}</div>}
+            </div>
+
+            <button type="submit">Submit</button>
+          </form>
         </div>
-      );
-    };
+      </div>
+    </div>
+  );
+};
 
 export default Contact;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\footer.css
-.div {
-    background-color: darkmagenta;
+.footer {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 2rem 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-logo {
+    flex: 1;
+}
+
+.ascii-art {
+    font-size: 0.7rem;
+    line-height: 1;
+    color: #eb1b7e;
+    margin: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    color: #d4d4d4;
+    font-size: 1.5rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-link:hover {
+    color: #569cd6;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+}
+
+.easter-egg {
+    color: #1e1e1e;
+    transition: color 0.3s ease;
+}
+
+.easter-egg:hover {
+    color: #eb1b7e;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin-bottom: 1rem;
+    }
+
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+}
+
+/* Glow effect on hover */
+.footer:hover .ascii-art {
+    text-shadow: 0 0 5px #569cd6, 0 0 10px #569cd6;
+}
+
+/* Terminal-like cursor animation */
+.footer-bottom p::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\footer\Footer.jsx
-import "./footer.css"
+
+import "./footer.css";
 
 const Footer = () => {
     return (
-    <div className="div">Footer</div>
-    )
+        <footer className="footer">
+            <div className="footer-content">
+                <div className="footer-logo">
+                    <pre className="ascii-art">
+                        {`
+   _____                   __
+  |  __ \\                 |  |
+  | |  | | _____    ___   |  | ___ ______
+  | |  | |/ _  \\  \\  / / /|  |/ _  | __ |
+  | |__| |  __/ \\   V / / |  | __/ ||__||
+  |_____/ \\___|  \\ _ / /  |__|\\__| |____|
+                        `}
+                    </pre>
+                </div>
+                <div className="footer-links">
+                    <a href="https://www.github.com/trimooo" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/leotrim-thaqi-0212a9228" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.twitter.com/LeotrimTh" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/_leotrim.th" target="_blank" rel="noopener noreferrer" className="social-link">
+                        <i className="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div className="footer-bottom">
+                <p>&copy; {new Date().getFullYear()} DevLeo. All rights reserved.</p>
+                <p className="easter-egg">{"<!-- You found the easter egg! lol  -->"}</p>
+            </div>
+        </footer>
+    );
 }
 
-export default Footer
+export default Footer;
 
 // File: \Users\Trimi\OneDrive\Desktop\devleo-react\devleo-react\src\components\home\home.css
 .home-container {
@@ -1914,13 +2340,19 @@ export default Footer
 
 import "./home.css";
 
+
+
+
+
 const Home = () => {
+
+    
     return (
         <div className="home-container">
             <div className="content-wrapper">
                 <div className="text-content">
-                    <h1 className="title">Junior Front-End Developer</h1>
-                    <p className="subtitle">
+                    <h1 className="title light-text">Junior Front-End Developer</h1>
+                    <p className="subtitle light-text" >
                         Hi, I am <span className="highlight">Leotrim Thaqi - devleo</span>. 
                         A passionate Front-End Developer based in Kosovo - Germany.
                         <i className="fas fa-map-marker-alt location-icon"></i>
@@ -2297,7 +2729,7 @@ const Projects = () => {
   ];
 
   return (
-    <section className="projects-section">
+    <section className="projects-section mb-10">
       <div className="container">
         <h1 className="section-title" id="projects">Projects</h1>
         <p className="section-subtitle">Each project is a unique piece of development</p>

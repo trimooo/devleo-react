@@ -1,0 +1,161 @@
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .toggle-label {
+    display: block;
+    width: 80px;
+    height: 40px;
+    background-color: #1e1e1e;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toggle-button {
+    position: absolute;
+    content: "";
+    height: 34px;
+    width: 34px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  input:checked + .toggle-label {
+    background-color: #4a4a7d;
+  }
+  
+  input:checked + .toggle-label .toggle-button {
+    transform: translateX(40px);
+    background-color: #C0C0C0;
+  }
+  
+  .crater {
+    position: absolute;
+    background-color: #E0E0E0;
+    border-radius: 50%;
+    transition: 0.4s;
+    opacity: 0;
+  }
+  
+  .crater-1 {
+    width: 10px;
+    height: 10px;
+    top: 8px;
+    left: 10px;
+  }
+  
+  .crater-2 {
+    width: 8px;
+    height: 8px;
+    bottom: 8px;
+    left: 6px;
+  }
+  
+  .crater-3 {
+    width: 6px;
+    height: 6px;
+    top: 14px;
+    right: 8px;
+  }
+  
+  .star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.4s;
+    opacity: 0;
+    box-shadow: 0 0 4px #fff;
+  }
+  
+  .star-1 {
+    width: 3px;
+    height: 3px;
+    top: 10px;
+    left: 35px;
+  }
+  
+  .star-2 {
+    width: 2px;
+    height: 2px;
+    top: 20px;
+    left: 28px;
+  }
+  
+  .star-3 {
+    width: 2px;
+    height: 2px;
+    bottom: 12px;
+    right: 20px;
+  }
+  
+  input:checked + .toggle-label .crater {
+    opacity: 1;
+  }
+  
+  input:checked + .toggle-label .star {
+    opacity: 1;
+    animation: twinkle 1s infinite alternate;
+  }
+  
+  @keyframes twinkle {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+  
+  /* Dark mode styles */
+  body.dark-mode {
+    background-color: #1a1a2e;
+    color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Make general text white in dark mode */
+  body.dark-mode p,
+  body.dark-mode h1,
+  body.dark-mode h2,
+  body.dark-mode h3,
+  body.dark-mode h4,
+  body.dark-mode h5,
+  body.dark-mode h6,
+  body.dark-mode div:not(.card):not(.project-description):not(.project-title):not(div):not(.easter-egg):not(.error-txt) {
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  /* Keep text color default for cards and buttons in dark mode */
+  body.dark-mode .card,
+  body.dark-mode .project-description,
+  body.dark-mode .project-title,
+  body.dark-mode div {
+    color: initial;
+  }
+  
+  /* Add some styles for cards and buttons to ensure visibility in dark mode */
+  body.dark-mode .card
+   {
+    background-color: #f0f0f0;
+  }
+  
+
+  body.dark-mode .easter-egg {
+    color: #1e1e1e;
+    transition: color 0.3s ease;
+  }
+  
+  body.dark-mode .easter-egg:hover {
+    color: #eb1b7e;
+  }

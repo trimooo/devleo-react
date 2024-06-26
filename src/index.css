@@ -383,20 +383,6 @@ body::-webkit-scrollbar-thumb:hover {
 
 
 
-  body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
-    /* Default text color for dark mode */
-}
-
-body.light-mode {
-    background-color: #ffffff;
-    color: #000000;
-    /* Default text color for light mode */
-}
-
-
-
 .mode-toggle {
     position: absolute;
     top: 100px;
